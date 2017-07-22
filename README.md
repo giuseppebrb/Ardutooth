@@ -6,7 +6,7 @@
 
 
 Ardutooth is a lightweight Android Archive Library (.aar) that allows you to create easily a stable bluetooth connection with an Arduino board.
-Once there's been established a connection you can fetch information about it or send data to the board (reading has not been implemented yet).
+Once a connection has been established, you can fetch information about it or send data to the board (reading has not been implemented yet).
 
 ## How to use it
 
@@ -36,7 +36,7 @@ The library offers also methods to retrieve information about Bluetooth module, 
 
 To close communication, simply use ```mArdutooh.disconnect();```
 
-## Arduino - Side
+## Arduino Side
 
 You can find a very basic sketch for arduino to the path [/Arduino_Basic_Sketch/Basic_Sketch.ino](https://github.com/giuseppebrb/Ardutooth/blob/master/Arduino_Basic_Sketch/Basic_Sketch.ino). Obviously this is a basic demo but it shows you how arduino could read data through the Serial Monitor and could be a starting point for your own sketch.
 
