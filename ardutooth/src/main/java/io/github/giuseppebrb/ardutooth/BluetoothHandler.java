@@ -164,7 +164,7 @@ class BluetoothHandler {
             } else {
                 Log.d(Ardutooth.TAG, "Bluetooth is already on");
                 retrieveConnection();
-                if (connected == false) {
+                if (!connected) {
                     builder.setTitle(mActivity.getString(R.string.bluetooth_not_connected));
                     builder.setMessage(mActivity.getString(R.string.bluetooth_not_connected_message));
                     builder.setCancelable(true);

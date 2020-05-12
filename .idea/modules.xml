@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Android-Ardutooth.iml" filepath="$PROJECT_DIR$/Android-Ardutooth.iml" group="Ardutooth" />
       <module fileurl="file://$PROJECT_DIR$/Ardutooth.iml" filepath="$PROJECT_DIR$/Ardutooth.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ardutooth/ardutooth.iml" filepath="$PROJECT_DIR$/ardutooth/ardutooth.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Ardutooth/Ardutooth-ardutooth.iml" filepath="$PROJECT_DIR$/Ardutooth/Ardutooth-ardutooth.iml" group="Ardutooth/ardutooth" />
+      <module fileurl="file://$PROJECT_DIR$/Ardutooth/ardutooth.iml" filepath="$PROJECT_DIR$/Ardutooth/ardutooth.iml" />
     </modules>
   </component>
 </project>
