@@ -16,6 +16,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
 
@@ -37,6 +38,7 @@ class BluetoothHandler {
     private Activity mActivity;
 
     private OutputStream mOutStream;
+    private InputStream mInputStream;
 
     /**
      * Constructor
@@ -83,14 +85,17 @@ class BluetoothHandler {
      */
     private void connect() {
         OutputStream tmpOut = null;
+        InputStream tmpIn = null;
         try {
             mSocket.connect();
             try {
                 tmpOut = mSocket.getOutputStream();
+                tmpIn = mSocket.getInputStream();
             } catch (IOException e) {
                 Log.e(Ardutooth.TAG, "Error occurred when creating output stream", e);
             }
             mOutStream = tmpOut;
+            mInputStream = tmpIn;
         } catch (IOException e) {
             Log.e(Ardutooth.TAG, "Error opening connection", e);
             closeConnection();
@@ -105,6 +110,7 @@ class BluetoothHandler {
             try {
                 mSocket.close();
                 mOutStream.close();
+                mInputStream.close();
             } catch (IOException e) {
                 Log.e(Ardutooth.TAG, "Error while closing socket", e);
                 Toast.makeText(mActivity.getApplication(), mActivity.getString(R.string.error_occurred_disconnecting), Toast.LENGTH_LONG).show();
@@ -223,6 +229,8 @@ class BluetoothHandler {
         return mOutStream;
     }
 
+    protected InputStream getInputStream() { return mInputStream; }
+
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -267,4 +275,5 @@ class BluetoothHandler {
             }
         }
     };
+
 }

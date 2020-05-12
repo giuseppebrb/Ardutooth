@@ -206,4 +206,40 @@ public class Ardutooth {
                 e.printStackTrace();
             }
     }
+
+    /**
+     * Reads a single byte from the Arduino, casts it into a {@link char}, and returns it.
+     *
+     * @return {@link char} value read
+     */
+    public char receiveChar(){
+        char c = 0;
+        if (mBtHandler.getSocket() != null)
+            try {
+               c = (char) mBtHandler.getInputStream().read();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        return c;
+    }
+
+    /**
+     * Reads from the Arduino until a return character ("\n") is read, and returns the full line.
+     *
+     * @return {@link String} line read
+     */
+    public String receiveLn(){
+
+        StringBuilder str = new StringBuilder();
+        if (mBtHandler.getSocket() != null)
+            try {
+                do{
+                    str.append((char) mBtHandler.getInputStream().read());
+                }while (mBtHandler.getSocket() != null && str.indexOf("\n") == -1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        return str.toString();
+    }
+
 }
