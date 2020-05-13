@@ -11,13 +11,18 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**
@@ -38,7 +43,7 @@ class BluetoothHandler {
     private Activity mActivity;
 
     private OutputStream mOutStream;
-    private InputStream mInputStream;
+    private BufferedReader mReader;
 
     /**
      * Constructor
@@ -83,6 +88,7 @@ class BluetoothHandler {
     /**
      * Open the input and output communication with Arduino.
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void connect() {
         OutputStream tmpOut = null;
         InputStream tmpIn = null;
@@ -95,7 +101,7 @@ class BluetoothHandler {
                 Log.e(Ardutooth.TAG, "Error occurred when creating output stream", e);
             }
             mOutStream = tmpOut;
-            mInputStream = tmpIn;
+            mReader = new BufferedReader(new InputStreamReader(tmpIn, StandardCharsets.US_ASCII));
         } catch (IOException e) {
             Log.e(Ardutooth.TAG, "Error opening connection", e);
             closeConnection();
@@ -110,7 +116,7 @@ class BluetoothHandler {
             try {
                 mSocket.close();
                 mOutStream.close();
-                mInputStream.close();
+                mReader.close();
             } catch (IOException e) {
                 Log.e(Ardutooth.TAG, "Error while closing socket", e);
                 Toast.makeText(mActivity.getApplication(), mActivity.getString(R.string.error_occurred_disconnecting), Toast.LENGTH_LONG).show();
@@ -229,9 +235,13 @@ class BluetoothHandler {
         return mOutStream;
     }
 
-    protected InputStream getInputStream() { return mInputStream; }
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    protected BufferedReader getInputReader() {
+        return mReader;
+    }
 
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();

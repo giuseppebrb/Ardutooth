@@ -3,9 +3,14 @@ package io.github.giuseppebrb.ardutooth;
 import android.app.Activity;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
 /**
@@ -212,11 +217,12 @@ public class Ardutooth {
      *
      * @return {@link char} value read
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public char receiveChar(){
         char c = 0;
         if (mBtHandler.getSocket() != null)
             try {
-               c = (char) mBtHandler.getInputStream().read();
+               c = (char) mBtHandler.getInputReader().read();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -228,18 +234,16 @@ public class Ardutooth {
      *
      * @return {@link String} line read
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public String receiveLn(){
-
-        StringBuilder str = new StringBuilder();
+        String result = "";
         if (mBtHandler.getSocket() != null)
             try {
-                do{
-                    str.append((char) mBtHandler.getInputStream().read());
-                }while (mBtHandler.getSocket() != null && str.indexOf("\n") == -1);
-            } catch (IOException e) {
-                e.printStackTrace();
+                result = mBtHandler.getInputReader().readLine();
+            } catch (IOException ex) {
+                ex.printStackTrace();
             }
-        return str.toString();
+        return result;
     }
 
 }
