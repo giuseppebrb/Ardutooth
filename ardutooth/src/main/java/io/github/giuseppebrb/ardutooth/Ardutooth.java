@@ -15,7 +15,7 @@ import java.util.UUID;
 
 /**
  * This singleton class represents the main component of the library.
- * It can be used to easily set a stable connection with an Arduino and to send data to it using the Serial Monitor.
+ * It can be used to easily set a stable connection with an Arduino and to send/receive data to/from it using the Serial Monitor.
  *
  * <p>The first thing you need is to create or get an instance of {@link Ardutooth} using something like
  * {@code Ardutooth mArdutooth = Ardutooth.getInstance(this)} where parameter represents the instance of
@@ -70,7 +70,7 @@ public class Ardutooth {
         } catch (Exception e) {
             Log.d(Ardutooth.TAG, "An error occurred while retrieving connection", e);
         }
-        return mBtHandler.connected;
+        return BluetoothHandler.connected;
     }
 
     /**
@@ -213,11 +213,11 @@ public class Ardutooth {
     }
 
     /**
-     * Reads a single byte from the Arduino, casts it into a {@link char}, and returns it.
+     * Reads a single character,  as defined by {@link BufferedReader}'s readLine method,
+     * from the Arduino, casts it into a {@link char}, and returns it.
      *
-     * @return {@link char} value read
+     * @return char value read
      */
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public char receiveChar(){
         char c = 0;
         if (mBtHandler.getSocket() != null)
@@ -230,12 +230,11 @@ public class Ardutooth {
     }
 
     /**
-     * Reads from the Arduino until a return character ("\n") is read, and returns the full line.
+     * Reads a line, as defined by {@link BufferedReader}'s readLine method, from the Arduino.
      *
      * @return {@link String} line read
      */
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public String receiveLn(){
+    public String receiveLine(){
         String result = "";
         if (mBtHandler.getSocket() != null)
             try {
