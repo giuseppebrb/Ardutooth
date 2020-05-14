@@ -1,6 +1,6 @@
 # Ardutooth
 
-[![Ardutooth](https://img.shields.io/badge/build-passing-brightgreen.svg?style=plastic)](https://github.com/giuseppebrb/Ardutooth) [![Version](https://img.shields.io/badge/version-v1.0.0-blue.svg?style=plastic)](https://github.com/giuseppebrb/Ardutooth) [![Download](https://img.shields.io/badge/download-release-brightgreen.svg?style=plastic)](https://github.com/giuseppebrb/Ardutooth/releases/tag/v1.0)
+[![Ardutooth](https://img.shields.io/badge/build-passing-brightgreen.svg?style=plastic)](https://github.com/giuseppebrb/Ardutooth) [![Version](https://img.shields.io/badge/version-v1.3.0-blue.svg?style=plastic)](https://github.com/giuseppebrb/Ardutooth) [![Download](https://img.shields.io/badge/download-release-brightgreen.svg?style=plastic)](https://github.com/giuseppebrb/Ardutooth/releases/tag/v.1.3)
 
 ![Ardutooth Banner](https://image.ibb.co/b6KKua/Ardutooth.jpg)
 
