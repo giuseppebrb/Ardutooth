@@ -3,14 +3,19 @@ package io.github.giuseppebrb.ardutooth;
 import android.app.Activity;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
 /**
  * This singleton class represents the main component of the library.
- * It can be used to easily set a stable connection with an Arduino and to send data to it using the Serial Monitor.
+ * It can be used to easily set a stable connection with an Arduino and to send/receive data to/from it using the Serial Monitor.
  *
  * <p>The first thing you need is to create or get an instance of {@link Ardutooth} using something like
  * {@code Ardutooth mArdutooth = Ardutooth.getInstance(this)} where parameter represents the instance of
@@ -65,7 +70,7 @@ public class Ardutooth {
         } catch (Exception e) {
             Log.d(Ardutooth.TAG, "An error occurred while retrieving connection", e);
         }
-        return mBtHandler.connected;
+        return BluetoothHandler.connected;
     }
 
     /**
@@ -206,4 +211,38 @@ public class Ardutooth {
                 e.printStackTrace();
             }
     }
+
+    /**
+     * Reads a single character,  as defined by {@link BufferedReader}'s readLine method,
+     * from the Arduino, casts it into a {@link char}, and returns it.
+     *
+     * @return char value read
+     */
+    public char receiveChar(){
+        char c = 0;
+        if (mBtHandler.getSocket() != null)
+            try {
+               c = (char) mBtHandler.getInputReader().read();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        return c;
+    }
+
+    /**
+     * Reads a line, as defined by {@link BufferedReader}'s readLine method, from the Arduino.
+     *
+     * @return {@link String} line read
+     */
+    public String receiveLine(){
+        String result = "";
+        if (mBtHandler.getSocket() != null)
+            try {
+                result = mBtHandler.getInputReader().readLine();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        return result;
+    }
+
 }
